@@ -113,7 +113,7 @@ join PROVEEDORES Prov on Prov.IDProveedor = ConProv.FK_CodigoProveedor
 where [Q. Total de Venta] > 1000000 -- CAMBIAR A 100 000
 
 
---9.
+-- 9. El historial del proyecto con menos maquinaria asignada y la planilla más grande. 
 /*****	Check	*****/	
 /*Proyecto con las La mayor Gente asignada*/
 select B.CodigoProyecto as [Proyecto con mas Gente Asignada], H.IDHistorial, H.FechaDeRegistro
@@ -121,17 +121,17 @@ from
 (
 	select top 1 FK_CodigoProyecto as CodigoProyecto ,count(FK_IDAlbañil) as [Gente Asignada]  from [MANO DE OBRA]
 	group by FK_CodigoProyecto
-	order by [Gente Asignada] asc
+	order by [Gente Asignada] desc
 )  B
 join HISTORIAL H on H.FK_CodigoProyecto = B.CodigoProyecto
 
-/*Proyecto con las La mayor Maquinaria asignada*/
+/*Proyecto con las La menor cantidad de  Maquinaria asignada*/
 select B.CodigoProyecto as [Proyecto con mas Maquinaria Asignada], H.IDHistorial, H.FechaDeRegistro
 from
 (
 	select top 1 FK_CodigoProyecto as CodigoProyecto ,count(PLACA) as [Maquinaria Asignada]  from MAQUINARIA
 	group by FK_CodigoProyecto
-	order by [Maquinaria Asignada] desc
+	order by [Maquinaria Asignada] asc
 )  B
 join HISTORIAL H on H.FK_CodigoProyecto = B.CodigoProyecto
 
